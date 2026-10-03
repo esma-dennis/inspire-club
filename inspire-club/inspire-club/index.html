@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>INSPIRE Club IIUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--panel:#1a0a0e;--ink:#fff3f0;--muted:#c9a9ae;--y:#f0c987;--o:#a3122f;--p:#800020;--g:#d4a24c;--b:#e07a8a;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg) radial-gradient(circle at 20% 0,#4a0a1a,transparent 55%),radial-gradient(circle at 90% 100%,#35060f,transparent 50%);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.px{font-family:"Press Start 2P",ui-monospace,Menlo,monospace;line-height:1.5}
+.wrap{max-width:480px;margin:0 auto;padding:18px 16px 40px}
+.screen{display:none}.screen.on{display:block;animation:pop .25s ease}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.title{text-align:center;padding:14px 0 6px}
+.title small{color:var(--g);font-size:10px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.title h1{font-size:26px;margin:14px 0 6px;color:#b3132f;text-shadow:2px 2px 0 var(--y),4px 4px 0 #000}
+.title p{color:var(--muted);margin:6px 0 0;font-size:15px}
+.xp{margin:16px 0 18px;background:#0007;border:3px solid var(--p);border-radius:10px;padding:8px 10px}
+.xp div.l{display:flex;justify-content:space-between;font-size:8px;margin-bottom:6px;color:var(--y)}
+.bar{height:12px;background:#2a1015;border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#800020,#f0c987);transition:width .4s}
+.grid{display:grid;gap:12px}
+.gbtn{--c:var(--o);display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:3px solid #e8b4b8;border-radius:14px;background:var(--c);color:#fff;padding:16px;font-size:11px;cursor:pointer;box-shadow:0 6px 0 #2e000a;transition:transform .08s,box-shadow .08s;position:relative}
+.gbtn:active{transform:translateY(5px);box-shadow:0 1px 0 #2e000a}
+.gbtn .ic{font-size:28px;font-family:system-ui}
+.gbtn small{display:block;font-family:system-ui;font-size:13px;margin-top:4px;opacity:.8;font-weight:600}
+.gbtn .tick{position:absolute;right:12px;top:10px;font-family:system-ui;font-size:18px;display:none}
+.gbtn.done .tick{display:block}
+.join{--c:#c1121f;text-decoration:none;justify-content:center;text-align:center;font-size:13px;padding:20px;margin-top:6px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{transform:scale(1.03)}}
+.back{display:inline-block;border:3px solid #000;background:var(--y);color:#1a0a0e;font-size:10px;padding:10px 12px;border-radius:10px;box-shadow:0 4px 0 #2e000a;cursor:pointer;margin-bottom:16px}
+.back:active{transform:translateY(3px);box-shadow:0 1px 0 #000}
+h2{font-size:16px;color:var(--y);margin:0 0 14px;text-shadow:2px 2px 0 var(--o)}
+.card{background:var(--panel);border:3px solid var(--p);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 5px 0 #0008}
+.card h3{margin:0 0 6px;font-size:10px;color:var(--b)}
+.card p{margin:0;font-size:15px;color:var(--ink)}
+.card .tag{display:inline-block;font-size:8px;background:var(--g);color:#1a0a0e;padding:4px 6px;border-radius:6px;margin-bottom:8px}
+.members{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mem{background:var(--panel);border:3px solid var(--b);border-radius:14px;padding:14px 8px;text-align:center}
+.mem b{display:block;font-size:14px;margin-top:4px}
+.mem span{font-size:8px;color:var(--y);font-family:"Press Start 2P",monospace;line-height:1.6}
+.note{color:var(--muted);font-size:13px;text-align:center;margin-top:10px}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.stat div{background:#0006;border:3px solid var(--g);border-radius:12px;text-align:center;padding:12px 6px}
+.stat strong{display:block;font-size:16px;color:var(--g)}
+.stat span{font-size:12px;color:var(--muted)}
+.qa{cursor:pointer}
+.qa p{display:none;margin-top:8px;color:var(--muted)}
+.qa.open p{display:block}
+.badge{display:none;text-align:center;margin-top:14px;font-size:9px;color:var(--y);line-height:1.8}
+.badge.on{display:block}
+
+.prog{cursor:pointer}
+.prog .hint{display:block;font-size:8px;color:var(--y);margin-top:10px}
+.prog .pic{display:none;margin-top:12px}
+.prog.open .pic{display:block}
+.prog.open .hint{display:none}
+.pic img,.ph{width:100%;border-radius:10px;border:3px solid var(--y);display:block;margin-bottom:8px}
+.ph{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;background:#000;color:var(--muted);font-size:9px;line-height:1.8;border-style:dashed}
+.mem .av{width:84px;height:84px;margin:0 auto;border-radius:50%;border:3px solid var(--y);background:#000;display:flex;align-items:center;justify-content:center;font-size:38px;overflow:hidden}
+.mem .av img{width:100%;height:100%;object-fit:cover;display:block}
+#teamphoto img{width:100%;border-radius:14px;border:3px solid var(--y);margin-bottom:14px;display:block}
+.pics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pics img,.pics .ph{aspect-ratio:1/1;object-fit:cover;margin:0;font-size:8px}
+.gt{font-size:9px;color:var(--y);margin:22px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--p)}
+.mem span{font-family:system-ui,sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;line-height:1.35;display:block;margin-top:4px}
+.mem b{font-weight:600}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#fx i{position:absolute;bottom:-30px;font-style:normal;color:var(--y);opacity:.45;animation:fl linear infinite}
+@keyframes fl{to{transform:translateY(-115vh) rotate(360deg)}}
+.wrap{position:relative;z-index:1}
+.title h1{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+#start{position:fixed;inset:0;z-index:50;background:var(--bg) radial-gradient(circle at 50% 30%,#5a0a1c,transparent 60%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer;transition:opacity .4s}
+#start.off{opacity:0;pointer-events:none}
+#start h1{font-size:30px;color:#b3132f;text-shadow:2px 2px 0 var(--y),4px 4px 0 #000;margin:0 0 18px;animation:bob 2.4s ease-in-out infinite}
+#start p{color:var(--y);font-size:11px;animation:blink 1s steps(2) infinite}
+#start small{color:var(--muted);margin-top:26px;font-size:14px}
+.cf{position:fixed;top:-30px;z-index:60;pointer-events:none;animation:cf 2.4s ease-in forwards}
+@keyframes cf{to{transform:translateY(110vh) rotate(540deg)}}
+.res{text-align:center}.res .big{font-size:64px}
+</style>
+</head>
+<body>
+<div id="fx"></div>
+<div id="start"><h1 class="px">INSPIRE<br>CLUB</h1><p class="px">▶ TAP TO START ◀</p><small>IIUM · Level up your voice!</small></div>
+<div class="wrap">
+
+<!-- HOME -->
+<section class="screen on" id="home">
+  <div class="title">
+    <small class="px">▶ PRESS START ◀</small>
+    <h1 class="px">INSPIRE<br>CLUB</h1>
+    <p>IIUM · Level up your voice, confidence &amp; leadership!</p>
+  </div>
+  <div class="xp"><div class="l px"><span>EXPLORED</span><span id="xpt">0/3</span></div><div class="bar"><i id="xpb"></i></div></div>
+  <div class="grid">
+    <button class="gbtn px" data-go="about" style="--c:#800020"><span class="ic">🎮</span><span>ABOUT US<small>Who we are</small></span><span class="tick">✅</span></button>
+    <button class="gbtn px" data-go="programs" style="--c:#a3122f"><span class="ic">🏕️</span><span>OUR PROGRAMS<small>Quests &amp; events</small></span><span class="tick">✅</span></button>
+    <button class="gbtn px" data-go="board" style="--c:#5c0016"><span class="ic">👑</span><span>MAINBOARD<small>Meet the team</small></span><span class="tick">✅</span></button>
+    <button class="gbtn px" data-go="quiz" style="--c:#c1121f"><span class="ic">🎲</span><span>WHO ARE YOU?<small>Find your INSPIRE type</small></span></button>
+    <a class="gbtn join px" id="join" href="#">⭐ JOIN THE CLUB ⭐</a>
+    <button class="gbtn px" data-go="social" style="--c:#2a2a2a"><span class="ic">📱</span><span>FOLLOW US<small>Socials</small></span></button>
+  </div>
+  <div class="badge px" id="badge">🏆 ACHIEVEMENT UNLOCKED!<br>You explored everything.<br>Show this to our booth crew!</div>
+</section>
+
+<!-- ABOUT -->
+<section class="screen" id="about">
+  <button class="back px" data-go="home">◀ BACK</button>
+  <h2 class="px">ABOUT US</h2>
+  <div class="stat"><div><strong class="px">2001</strong><span>Established</span></div><div><strong class="px">CENSERVE</strong><span>Under IIUM</span></div></div>
+  <div class="card"><h3 class="px">WHO ARE WE?</h3><p>INSPIRE Club is an IIUM student club that trains members to become facilitators and to run fun, meaningful programmes for students and the community.</p></div>
+  <div class="card"><h3 class="px">OUR MISSION</h3><p>Help people grow in communication, confidence and leadership, while making friends from every Kulliyyah.</p></div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="screen" id="programs">
+  <button class="back px" data-go="home">◀ BACK</button>
+  <h2 class="px">OUR PROGRAMS</h2>
+  <p class="note" style="margin:-6px 0 14px">Tap a program to see its photos 📸</p>
+  <div id="proglist"></div>
+</section>
+
+<!-- BOARD -->
+<section class="screen" id="board">
+  <button class="back px" data-go="home">◀ BACK</button>
+  <h2 class="px">MAINBOARD</h2>
+  <div id="mbwrap"></div>
+</section>
+
+<!-- QUIZ -->
+<section class="screen" id="quiz">
+  <button class="back px" data-go="home">◀ BACK</button>
+  <h2 class="px">WHO ARE YOU?</h2>
+  <div id="qbox"></div>
+</section>
+
+<!-- SOCIAL -->
+<section class="screen" id="social">
+  <button class="back px" data-go="home">◀ BACK</button>
+  <h2 class="px">FOLLOW US</h2>
+  <div class="grid">
+    <a class="gbtn px" id="insta" href="#" style="--c:#800020"><span class="ic">📸</span><span>INSTAGRAM</span></a>
+    <a class="gbtn px" id="tt" href="#" style="--c:#5c0016"><span class="ic">🎵</span><span>TIKTOK</span></a>
+  </div>
+</section>
+
+</div>
+<script>
+// ===== EDIT THESE BEFORE THE BOOTH =====
+var GFORM="https://forms.gle/bhhqFHrFRjhW16aH6";
+var INSTAGRAM="https://www.instagram.com/inspireclubiium?stkn=MTM3MDMzYTQxaGJrbg==";
+var TIKTOK="https://www.tiktok.com/@inspireclubiium?_r=1&_t=ZS-9AFUYOGN2U1";
+var PROGRAMS=[ // tag, title, description, (unused), photo-name. Photos load from the photos/ folder as NAME-1.jpg to NAME-4.jpg
+ ["TRAINING","ADVANCE INTENSIVE TRAINING","Learn the skills of facilitating and build a strong bond with fellow members.",[],"ait"],
+ ["MENTORING","FRIENDS","Practise guiding and mentoring your peers while growing your communication and leadership skills.",[],"friends"],
+ ["COMMUNITY","INSIGHT","See the real-life situations of vulnerable communities and apply your facilitating skills to help.",[],"insight"],
+ ["BONDING","INSFAD (INSPIRE FAMILY DAY)","A fun day to bond with club members of every batch and age.",[],"insfad"],
+ ["CELEBRATION","ANNUAL GRAND DINNER (RADIANT’26)","A night to celebrate and thank every member for their hard work this year.",[],"dinner"]
+];
+// =======================================
+var $=function(i){return document.getElementById(i)};
+$("join").href=GFORM;$("insta").href=INSTAGRAM;$("tt").href=TIKTOK;
+$("proglist").innerHTML=PROGRAMS.map(function(p,qn){var pics='<div class="pics">'+[0,1,2,3].map(function(i){return true?'<img loading="lazy" src="photos/'+p[4]+'-'+(i+1)+'.jpg" alt="'+p[1]+' photo '+(i+1)+'">':'<div class="ph px">📷<br>PHOTO '+(i+1)+'</div>'}).join("")+'</div>';return '<div class="card prog"><span class="tag px">QUEST '+(qn+1)+' · '+p[0]+'</span><h3 class="px">'+p[1]+'</h3><p>'+p[2]+'</p><span class="hint px">▼ TAP TO SEE PHOTOS</span><div class="pic">'+pics+'</div></div>'}).join("");
+$("proglist").addEventListener("error",function(e){var t=e.target;if(t.tagName==="IMG"){var d=document.createElement("div");d.className="ph px";d.innerHTML="📷<br>PHOTO";t.replaceWith(d)}},true);
+document.querySelectorAll(".prog").forEach(function(c){c.addEventListener("click",function(){c.classList.toggle("open")})});
+var seen={},KEYS=["about","programs","board"];
+function go(id){
+  document.querySelectorAll(".screen").forEach(function(s){s.classList.toggle("on",s.id===id)});
+  window.scrollTo(0,0);
+  if(KEYS.indexOf(id)>-1){seen[id]=1;var b=document.querySelector('[data-go="'+id+'"]');if(b)b.classList.add("done")}
+  var n=Object.keys(seen).length;$("xpt").textContent=n+"/3";$("xpb").style.width=(n*33.4)+"%";
+  var was=$("badge").classList.contains("on");$("badge").classList.toggle("on",n===3);if(n===3&&!was)confetti();if(id==="quiz")startQuiz();
+}
+document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){go(b.getAttribute("data-go"))})});
+
+// ===== MAINBOARD: change "Name" to real names. Photo = photos/SLUG.jpg =====
+//var N="Name";
+var GROUPS=[ // group title, [role, name, photo-slug]
+ ["LEADERSHIP",[["PRESIDENT","DEEJA","president"],["VICE PRESIDENT 1","NAJLA","vp1"],["VICE PRESIDENT 2","EMA","vp2"],["VICE PRESIDENT 3","ESMA","vp3"]]],
+ ["SECRETARIAT",[["SECRETARY 1","NAJWA","secretary1"],["SECRETARY 2","FARAH","secretary2"]]],
+ ["FINANCE",[["FINANCIAL CONTROLLER 1","ILHAMI","finance1"],["FINANCIAL CONTROLLER 2","ADAM","finance2"]]],
+ ["ADVISOR TRAINING AND MODULE",[["HEAD ATM","ZUL","training-head"],["ATM 1","QIS","training-advisor1"],["ATM 2","HAIDAH","training-advisor2"]]],
+ ["ISLAMIC AND SPIRITUAL DEVELOPMENT",[["HEAD","ANNE","islamic-head"],["ASSISTANT","AINIE","islamic-assistant"]]],
+ ["PUBLIC RELATIONS",[["HEAD","KHAIRINA","pr-head"],["ASSISTANT","IWANA","pr-assistant"]]],
+ ["RESEARCH AND DEVELOPMENT",[["HEAD","AIMEY","rnd-head"],["ASSISTANT","HANI","rnd-assistant"]]],
+ ["ENTREPRENEURSHIP, SPONSORSHIP AND WELFARE",[["HEAD","SYAKIRIN","esw-head"],["ASSISTANT","MIA","esw-assistant"]]],
+ ["INFORMATION, PUBLICATION AND CORPORATE BINDING",[["HEAD","BIHAH","ipcb-head"],["ASSISTANT","CAMAD","ipcb-assistant"]]],
+ ["TRAINERS",[["TRAINER 1","AKMAL","trainer1"],["TRAINER 2","MIZAN","trainer2"],["TRAINER 3","IMREY","trainer3"],["TRAINER 4","UMAR","trainer4"],["TRAINER 5","HAD","trainer5"],["TRAINER 6","LIYANA","trainer6"],["TRAINER 7","DIJAH","trainer7"],["TRAINER 8","SERR","trainer8"]]]
+];
+$("mbwrap").innerHTML=GROUPS.map(function(g){return '<h3 class="gt px">'+g[0]+'</h3><div class="members">'+g[1].map(function(m){return '<div class="mem"><div class="av"><img loading="lazy" src="photos/'+m[2]+'.jpg" alt=""></div><b>'+m[1]+'</b><span>'+m[0]+'</span></div>'}).join("")+'</div>'}).join("");
+$("mbwrap").addEventListener("error",function(e){var t=e.target;if(t.tagName==="IMG")t.replaceWith(document.createTextNode("👤"))},true);
+
+// ===== FUN STUFF =====
+function buzz(){try{navigator.vibrate&&navigator.vibrate(15)}catch(e){}}
+document.addEventListener("click",function(e){if(e.target.closest&&e.target.closest(".gbtn"))buzz()});
+$("start").addEventListener("click",function(){this.classList.add("off");buzz()});
+(function(){var S=["✦","✧","★","·"],f=$("fx");for(var i=0;i<18;i++){var e=document.createElement("i");e.textContent=S[i%4];e.style.left=Math.random()*100+"%";e.style.fontSize=(10+Math.random()*14)+"px";e.style.animationDuration=(9+Math.random()*10)+"s";e.style.animationDelay=(-Math.random()*15)+"s";f.appendChild(e)}})();
+function confetti(){var E=["⭐","✨","🎉","🏆","💥"];for(var i=0;i<28;i++){var c=document.createElement("span");c.className="cf";c.textContent=E[i%5];c.style.left=Math.random()*100+"%";c.style.fontSize=(16+Math.random()*16)+"px";c.style.animationDelay=(Math.random()*.6)+"s";document.body.appendChild(c);setTimeout(function(el){el.remove()},3500,c)}}
+var QZ=[["Your friends are stuck on a problem. You…",["Take charge and make a plan","Listen and ask the right questions","Cheer everyone up"]],["Your perfect weekend?",["Leading a team challenge","Helping someone in need","A big hangout with the squad"]],["Your superpower is…",["Confidence","Empathy","Energy"]],["In a group project, you are the…",["Captain who sets the direction","Listener everyone trusts","Mood-maker who keeps spirits high"]],["What do you enjoy most?",["Planning and organising events","Helping others through tough times","Meeting new people"]]];
+var RES=[["🦁","THE COMMANDER","You lead from the front. You would shine guiding teams as an INSPIRE facilitator!"],["🦉","THE GUIDE","You listen and lift people up. Perfect for mentoring in FRIENDS and INSIGHT!"],["🔥","THE SPARK","You bring the energy that bonds everyone together. INSFAD needs you!"]];
+var qi=0,sc=[0,0,0];
+function startQuiz(){qi=0;sc=[0,0,0];showQ()}
+function showQ(){var b=$("qbox");
+ if(qi>=QZ.length){var R=RES[sc.indexOf(Math.max.apply(null,sc))];
+  b.innerHTML='<div class="card res"><div class="big">'+R[0]+'</div><h3 class="px" style="margin:10px 0">'+R[1]+'</h3><p>'+R[2]+'</p></div><div class="grid"><a class="gbtn join px" href="'+GFORM+'">⭐ JOIN THE CLUB ⭐</a><button class="gbtn px" id="again" style="--c:#2a2a2a">↻ PLAY AGAIN</button></div>';
+  $("again").addEventListener("click",startQuiz);confetti();return}
+ b.innerHTML='<div class="note px" style="margin-bottom:12px">QUESTION '+(qi+1)+'/'+QZ.length+'</div><div class="card"><p style="font-size:17px;font-weight:600">'+QZ[qi][0]+'</p></div><div class="grid">'+QZ[qi][1].map(function(o,i){return '<button class="gbtn px" data-a="'+i+'" style="--c:#5c0016;font-size:10px">'+o+'</button>'}).join("")+'</div>';
+ b.querySelectorAll("[data-a]").forEach(function(x){x.addEventListener("click",function(){sc[+x.getAttribute("data-a")]++;qi++;showQ()})})}
+</script>
+</body>
+</html>

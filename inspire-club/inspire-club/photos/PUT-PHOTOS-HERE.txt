@@ -1,0 +1,10 @@
+PROGRAM PHOTOS (.jpg, up to 4 each):
+ait-1..4  friends-1..4  insight-1..4  insfad-1..4  dinner-1..4
+
+MAINBOARD PHOTOS (.jpg, 1 each):
+president, vp1, vp2, vp3, secretary1, secretary2, finance1, finance2,
+training-head, training-advisor1, training-advisor2,
+islamic-head, islamic-assistant, pr-head, pr-assistant,
+rnd-head, rnd-assistant, esw-head, esw-assistant,
+ipcb-head, ipcb-assistant, trainer1 ... trainer8
+(example: president.jpg)
